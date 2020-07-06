@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import { db } from './models/index.js';
+import { gradeRouter } from './routes/gradeRouter.js';
 
 (async () => {
   try {
@@ -26,8 +27,11 @@ app.use(
   })
 );
 
+app.use(gradeRouter);
 app.get('/', (req, res) => {
   res.send('API em execucao');
 });
 
-app.listen(process.env.PORT || 8081, () => {});
+app.listen(process.env.PORT || 8081, () => {
+  logger.info(`Servidor em execucao na porta ${process.env.PORT}`);
+});
