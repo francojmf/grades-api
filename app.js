@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import { db } from './models/index.js';
 import { gradeRouter } from './routes/gradeRouter.js';
+import { logger } from './config/logger.js';
 
 (async () => {
   try {
@@ -11,7 +12,10 @@ import { gradeRouter } from './routes/gradeRouter.js';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    logger.info('Conectado ao banco de dados');
   } catch (error) {
+    logger.error(`Erro ao conectar no banco de dados! ${error}`);
+
     process.exit();
   }
 })();
