@@ -1,32 +1,32 @@
-import mongoose from 'mongoose';
-
-const gradeSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  subject: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  value: {
-    type: Number,
-    required: true,
-    //Valida se a nota inserida e' menor que zero
-    validate(value) {
-      if (value < 0) throw new Error('Valor negativo para nota');
+export default (mongoose) => {
+  const schema = mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
     },
-  },
-  lastModified: {
-    type: Date,
-    default: Date.now,
-  },
-});
+    subject: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: Number,
+      required: true,
+      validate(value) {
+        if (value < 0)
+          throw new Error('Valor negativo para a nota não permitido');
+      },
+    },
+    lastModified: {
+      type: Date,
+      default: Date.now,
+    },
+  });
 
-const gradeModel = mongoose.model('grade', gradeSchema, 'grade');
+  const Grade = mongoose.model('grades', schema);
 
-export default { gradeModel };
+  return Grade;
+};
